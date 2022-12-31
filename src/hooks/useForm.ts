@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 
 export interface IFormField {
   name: string;
@@ -16,6 +16,7 @@ export interface IUseFormProps {
 }
 
 export const useForm = (props: IUseFormProps) => {
+  
   const [state, setState] = useState<IUseFormSte>({ fields: props.fields });
 
   const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -36,6 +37,15 @@ export const useForm = (props: IUseFormProps) => {
     }));
   };
 
+  // useEffect( () => {
+  //   console.log('Props change');
+  //   setState({fields: props.fields});
+  // }, []);
+
+  const resetForm = (newForm: IUseFormProps) => {
+    setState(newForm);
+  }
+
   const field = (key: string): IFormField | null => {
     const f = state.fields.find((field) => field.name == key);
     if (f) return f;
@@ -46,5 +56,6 @@ export const useForm = (props: IUseFormProps) => {
     formFields: state.fields,
     onInputChange,
     field,
+    resetForm,
   };
 };

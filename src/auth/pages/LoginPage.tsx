@@ -8,21 +8,23 @@ import { useForm } from '../../hooks';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState, startGoogleSignIn, startLoginWithEmailPassword} from '../../store';
 
+const intialForm = {
+  fields: [
+    {
+      name: 'email',
+      value: '',
+    },
+    {
+      name: 'password',
+      value: '',
+    },
+  ],
+}
+
 export const LoginPage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const authStatus = useSelector((state: RootState) => state.auth.status);
-  const form = useForm({
-    fields: [
-      {
-        name: 'email',
-        value: '',
-      },
-      {
-        name: 'password',
-        value: '',
-      },
-    ],
-  });
+  const form = useForm(intialForm);
 
   const onFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

@@ -1,26 +1,40 @@
-import { createReducer, createSlice } from "@reduxjs/toolkit";
-import { IJournalSte } from "./interfaces";
-import { journalReducer } from "./reducers/reducers";
-import { buildStartNewNote } from "./thunks/startNewNote";
-
+import { createReducer, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IJournalSte } from './interfaces';
+import { buildStartNewNote } from './thunks/startNewNote';
+import {
+  addNewNote as addNewNoteReducer,
+  setActiveNote as setActiveNoteReducer,
+  setNotes as setNotesReducer,
+  setSavig as setSavigReducer,
+  updateNote as updateNoteReducer,
+  deleteNoteById as deleteNoteByIdReducer,
+} from './reducers';
+import { buildStartLoadingNotes } from './thunks/startLoadNotes';
+import { buildStartSavingNote } from './thunks/startSavingNote';
 
 const initialState: IJournalSte = {
   active: null,
   isSaving: false,
   messageSaved: '',
-  notes: []
-}
-
+  notes: [],
+};
 
 export const journalSlice = createSlice({
   name: 'journal',
   initialState,
   reducers: {
-    journalReducer,
+    addNewNote: addNewNoteReducer,
+    setActiveNote: setActiveNoteReducer,
+    setNotes: setNotesReducer,
+    setSavig: setSavigReducer,
+    updateNote: updateNoteReducer,
+    deleteNoteById: deleteNoteByIdReducer,
   },
   extraReducers: (builder) => {
     buildStartNewNote(builder);
-  }
+    buildStartLoadingNotes(builder);
+    buildStartSavingNote(builder);
+  },
 });
 
-export const {addNewNote, setActiveNote, setNotes, setSavig, updateNote, deleteNoteById } = journalSlice.actions;
+export const { addNewNote, setActiveNote, setNotes, setSavig, updateNote, deleteNoteById } = journalSlice.actions;

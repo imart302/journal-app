@@ -1,5 +1,6 @@
 import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, updateProfile } from 'firebase/auth';
-import { FirebaseAuth } from './config';
+import { collection, DocumentData, getDocs } from 'firebase/firestore/lite';
+import { FirebaseAuth, FirebaseDB } from './config';
 
 const googleProvider = new GoogleAuthProvider();
 export const signInWithGoogle = async () => {
@@ -70,4 +71,18 @@ export const signInWithEmailPassword = async ({email, password}: {email: string,
 
 export const logoutFirebase = async () => {
   await FirebaseAuth.signOut();
+}
+
+export const getUserColletion = async (userUid: string, collectionPath: string) => {
+
+  const collectionRef = collection(FirebaseDB, `${ userUid }/${ collectionPath }`);
+  const docs = await getDocs(collectionRef);
+
+  const data : DocumentData[] = [];
+  docs.forEach( (result) => {
+    data.push( {id: result.id, ... result.data()} );
+  });
+
+  return data;
+
 }

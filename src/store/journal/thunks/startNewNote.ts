@@ -12,9 +12,7 @@ export const startNewNote = createAsyncThunk<
     state: RootState
   }  
 >('journal/newNote', async (note, thunkAPI) => {
-  console.log("🚀 ~ file: startNewNote.ts:13 ~ > ~ note", note)
   const user = thunkAPI.getState().auth.user;
-  console.log("🚀 ~ file: startNewNote.ts:14 ~ > ~ user", user);
 
   const newDoc = doc( collection(FirebaseDB, `${user?.uid}/journal/notes`) );
   await setDoc(newDoc, note);

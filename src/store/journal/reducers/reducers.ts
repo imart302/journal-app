@@ -1,32 +1,28 @@
-import { createAction, createReducer } from '@reduxjs/toolkit';
+import { createAction, createReducer, PayloadAction } from '@reduxjs/toolkit';
 import { IJournalSte, INote, INoteFirebase } from '../interfaces';
 
-export const addNewNote = createAction<INote>('journal/newNote');
-export const setActiveNote = createAction<number>('journal/setActiveNote');
-export const setNotes = createAction<INoteFirebase>('journal/setNotes');
-export const setSavig = createAction<boolean>('journal/setSaving');
-export const updateNote = createAction<INoteFirebase>('journal/updateNote');
-export const deleteNoteById = createAction<number>('journal/deleteNoteById');
 
-const initialState: IJournalSte = {
-  active: null,
-  isSaving: false,
-  messageSaved: '',
-  notes: [],
-};
+export const addNewNote = (state: IJournalSte, action: PayloadAction<void>) => {
 
-export const journalReducer = createReducer(initialState, (builder) => {
-  builder.addCase(addNewNote, (state, action) => {
-    console.log('NEW NOTE ADDED');
-  });
+}
 
-  builder.addCase(setActiveNote, (state, action) => {});
+export const setActiveNote = (state: IJournalSte, action: PayloadAction<INoteFirebase>) => {
+  state.active = action.payload;
+  state.messageSaved = '';
+}
 
-  builder.addCase(setNotes, (state, action) => {});
+export const setNotes = (state: IJournalSte, action: PayloadAction<void>) => {
 
-  builder.addCase(setSavig, (state, action) => {});
+}
 
-  builder.addCase(updateNote, (state, action) => {});
+export const setSavig = (state: IJournalSte, action: PayloadAction<void>) => {
 
-  builder.addCase(deleteNoteById, (state, action) => {});
-});
+}
+
+export const updateNote = (state: IJournalSte, action: PayloadAction<void>) => {
+
+}
+
+export const deleteNoteById = (state: IJournalSte, action: PayloadAction<void>) => {
+
+}
