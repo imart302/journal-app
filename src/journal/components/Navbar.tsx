@@ -2,14 +2,16 @@ import { LogoutOutlined, MenuOutlined } from '@mui/icons-material';
 import { AppBar, IconButton, Toolbar, Grid, Typography } from '@mui/material';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../store';
+import { AppDispatch, clearJournalNotes } from '../../store';
 import { startLogout } from '../../store/auth/thunks/startLogout';
+
 
 export const Navbar = ({ drawerWidth = 240 }: { drawerWidth: number }) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const onLogout = () => {
     dispatch(startLogout());
+    dispatch(clearJournalNotes());
   };
 
   return (

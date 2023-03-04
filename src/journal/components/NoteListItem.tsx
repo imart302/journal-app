@@ -14,6 +14,7 @@ export const NoteListItem = ({ note }: { note: INoteFirebase }) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const onSetActiveNote = () => {
+    console.log('seeting active note');
     dispatch(setActiveNote(note));
   }
 

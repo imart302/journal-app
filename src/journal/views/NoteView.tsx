@@ -1,4 +1,5 @@
 import {
+  DeleteOutline,
   FourMpRounded,
   SaveOutlined,
   UploadOutlined,
@@ -10,11 +11,14 @@ import Swal from 'sweetalert2';
 import { useForm } from '../../hooks';
 import {
   AppDispatch,
+  INoteFiles,
   INoteFirebase,
   RootState,
   setActiveNote,
 } from '../../store';
+import { startDeleteNote } from '../../store/journal/thunks/startDeleteNote';
 import { startSavingNote } from '../../store/journal/thunks/startSavingNote';
+import { startUploadingFiles } from '../../store/journal/thunks/startUploadingFiles';
 import { ImageGalery } from '../components';
 
 export const NoteView = () => {
@@ -34,10 +38,6 @@ export const NoteView = () => {
   };
   const form = useForm(initalForm);
 
-  // useEffect(() => {
-  //   console.log('Component mount');
-  // }, []);
-
   //Only when writing on the form change the active note with the values of the form
   useEffect(() => {
     //console.log('FORM CHANGED Fields');
@@ -46,6 +46,7 @@ export const NoteView = () => {
       date: activeNote?.date ?? 0,
       title: form.field('title')?.value ?? '',
       body: form.field('body')?.value ?? '',
+      imageURLs: activeNote?.imageURLs,
     };
     dispatch(setActiveNote(newNote));
   }, [form.formFields]);
@@ -78,7 +79,26 @@ export const NoteView = () => {
     }
   };
 
-  const onFileChange = () => {};
+  const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(event.target.files?.length);
+    console.log(event.target.files);
+  
+    //TODO
+    // dispatch(startUploadingFiles);
+    if(!activeNote || !event.target.files) return;
+
+    const noteFiles : INoteFiles = {
+      note: activeNote,
+      files: event.target.files,
+    }
+    dispatch(startUploadingFiles(noteFiles));
+
+  };
+
+  const handleDeleteNote = () => {
+    if(!activeNote) return;
+    dispatch(startDeleteNote(activeNote));
+  }
 
   return (
     <Grid
@@ -141,8 +161,13 @@ export const NoteView = () => {
           minRows={6}
         ></TextField>
       </Grid>
+      <Grid container justifyContent='end'>
+          <Button color='error' onClick={handleDeleteNote}>
+            <DeleteOutline />
+          </Button>
+      </Grid>
       {/* Image galery */}
-      <ImageGalery></ImageGalery>
+      { activeNote?.imageURLs ? <ImageGalery images={activeNote?.imageURLs}></ImageGalery>:<></>} 
     </Grid>
   );
 };

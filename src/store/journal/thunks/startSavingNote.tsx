@@ -13,14 +13,13 @@ export const startSavingNote = createAsyncThunk<
   }  
 >('journal/savingNote', async (note, thunkAPI) => {
   const user = thunkAPI.getState().auth.user;
-  console.log('SAVING NOTE');
-  console.log(note);
 
   const docRef = doc( FirebaseDB, `${user?.uid}/journal/notes/${note.id}` );
 
   await updateDoc(docRef, {
     title: note.title,
     body: note.body,
+    imageURLs: note.imageURLs ?? [] 
   });
   
   return note;

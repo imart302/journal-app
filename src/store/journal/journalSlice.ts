@@ -8,9 +8,12 @@ import {
   setSavig as setSavigReducer,
   updateNote as updateNoteReducer,
   deleteNoteById as deleteNoteByIdReducer,
+  clearJournalNotes as clearJournalNotesReducer,
 } from './reducers';
 import { buildStartLoadingNotes } from './thunks/startLoadNotes';
 import { buildStartSavingNote } from './thunks/startSavingNote';
+import { buildStartUploadingFiles } from './thunks/startUploadingFiles';
+import { buildStartDeleteNote } from './thunks/startDeleteNote';
 
 const initialState: IJournalSte = {
   active: null,
@@ -29,12 +32,15 @@ export const journalSlice = createSlice({
     setSavig: setSavigReducer,
     updateNote: updateNoteReducer,
     deleteNoteById: deleteNoteByIdReducer,
+    clearJournalNotes: clearJournalNotesReducer,
   },
   extraReducers: (builder) => {
     buildStartNewNote(builder);
     buildStartLoadingNotes(builder);
     buildStartSavingNote(builder);
+    buildStartUploadingFiles(builder);
+    buildStartDeleteNote(builder);
   },
 });
 
-export const { addNewNote, setActiveNote, setNotes, setSavig, updateNote, deleteNoteById } = journalSlice.actions;
+export const { addNewNote, setActiveNote, setNotes, setSavig, updateNote, deleteNoteById, clearJournalNotes } = journalSlice.actions;

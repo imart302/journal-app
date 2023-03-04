@@ -66,7 +66,7 @@ export const signInWithEmailPassword = async ({email, password}: {email: string,
   catch (error) {
     throw error;
   }
-
+  
 }
 
 export const logoutFirebase = async () => {

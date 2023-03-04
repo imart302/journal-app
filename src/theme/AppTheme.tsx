@@ -11,7 +11,7 @@ export const AppTheme = ({
   return (
     <ThemeProvider theme={purpleTheme}>
       <CssBaseline />
-      {children}
+      { children }
     </ThemeProvider>
   );
 };

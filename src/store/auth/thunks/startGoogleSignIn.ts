@@ -18,10 +18,11 @@ export const builStartGoogleSignIn = (builder: ActionReducerMapBuilder<IAuthSte>
     state.status = 'Cheking';
   });
   builder.addCase(startGoogleSignIn.fulfilled, (state, action) => {
+
     if(action.payload.ok){
       const user : IUser = {
         displayName: action.payload.displayName || '',
-        email: action.payload.displayName || '',
+        email: action.payload.email || '',
         errorMessage: action.payload.error,
         photoURL: action.payload.photoURL || '',
         uid: action.payload.uid || ''
@@ -33,5 +34,6 @@ export const builStartGoogleSignIn = (builder: ActionReducerMapBuilder<IAuthSte>
   });
   builder.addCase(startGoogleSignIn.rejected, (state, action) => {
     state.status = 'None';
+    state.error = 'Error on SignInWithGoogle'
   });
 }

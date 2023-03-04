@@ -7,6 +7,7 @@ export interface INote {
 
 export interface INoteFirebase extends INote {
   id: string;
+  imageURLs?: string[];
 }
 
 export interface IJournalSte {
@@ -15,3 +16,8 @@ export interface IJournalSte {
   notes: INoteFirebase[],
   active: INoteFirebase | null,
 };
+
+export interface INoteFiles {
+  note: INoteFirebase,
+  files: FileList,
+}

@@ -16,7 +16,7 @@ export const startLoadingNotes = createAsyncThunk<
   const user = thunkAPI.getState().auth.user;
 
   const notes = await getUserColletion(user?.uid || '', 'journal/notes');
-  console.log(notes);
+
   return notes as INoteFirebase[];
 });
 
